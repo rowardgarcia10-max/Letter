@@ -96,10 +96,10 @@ body {
     text-align: left;
 }
 
-/* Blue Heart Seal in the Middle */
+/* Fixed Blue Heart Seal */
 .heart {
     position: absolute;
-    top: 44%;
+    top: 50%;
     left: 50%;
     width: 18px;
     height: 18px;
@@ -126,8 +126,8 @@ body {
 }
 
 .heart::after {
-    right: 0;
-    top: -9px;
+    left: -9px;
+    top: 0;
 }
 
 /* Floating Hearts Animation Container */
