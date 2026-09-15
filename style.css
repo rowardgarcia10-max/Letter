@@ -1,4 +1,4 @@
-:root{
+:root {
     --primary: #fff;
     --bg-color: rgb(5, 53, 61);
     --bg-envelope-color: #f5edd1;
@@ -8,7 +8,8 @@
     --txt-color: #444;
     --heart-color: #2563eb; /* Royal blue heart seal */
 }
-body{
+
+body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -16,72 +17,94 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 100vh;
 }
-.container{
-    height: 150vh;
+
+.container {
     display: grid;
     place-items: center;
 }
-.container > .envelope-wrapper{
+
+.envelope-wrapper {
+    position: relative;
     background: var(--bg-envelope-color);
     box-shadow: 0 0 40px var(--shadow-color);
-    position: relative;
-    width: 400px;
-    height: 330px;
+    width: 350px;
+    height: 250px;
     cursor: pointer;
 }
-.container > .envelope-wrapper > .envelope{
+
+.envelope {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.envelope::before {
     content: '';
     position: absolute;
-    z-index: 2;
-    border-top: 130px solid var(--envelope-tab);
-    border-right: 150px solid transparent;
-    border-left: 150px solid transparent;
     top: 0;
+    left: 0;
+    z-index: 4;
+    border-top: 130px solid var(--envelope-tab);
+    border-right: 175px solid transparent;
+    border-left: 175px solid transparent;
     transform-origin: top;
     transition: all 0.5s ease-in-out 0.7s;
 }
-.container > .envelope-wrapper > .envelope::after{
+
+.envelope::after {
     content: '';
     position: absolute;
+    bottom: 0;
+    left: 0;
     z-index: 2;
-    border-top: 130px solid transparent;
-    border-left: 150px solid var(--envelope-cover);
-    border-right: 150px solid var(--envelope-cover);
-    border-bottom: 100px solid var(--envelope-cover);
-    bottom: 0;
+    border-top: 120px solid transparent;
+    border-left: 175px solid var(--envelope-cover);
+    border-right: 175px solid var(--envelope-cover);
+    border-bottom: 110px solid var(--envelope-cover);
 }
-.letter{
+
+.letter {
     position: absolute;
-    right: 20%;
     bottom: 0;
-    width: 54%;
+    left: 10%;
+    width: 80%;
     height: 80%;
     background: var(--primary);
     transition: all 1s ease-in-out;
-    padding: 20px 10px;
+    padding: 20px 15px;
     box-shadow: 0 0 10px var(--shadow-color);
+    z-index: 1;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
-.letter > .text{
+
+.letter > .text {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 10px;
+    font-size: 11px;
     color: var(--txt-color);
     text-align: left;
 }
-.heart{
+
+.heart {
     position: absolute;
     top: 50%;
     left: 50%;
     width: 15px;
     height: 15px;
     background: var(--heart-color);
-    z-index: 4;
+    z-index: 5;
     transform: translate(-50%, -20%) rotate(45deg);
     transition: transform 0.5s ease-in-out 1s;
     box-shadow: 0 0 10px var(--shadow-color);
 }
+
 .heart::before,
-.heart::after{
+.heart::after {
     content: '';
     position: absolute;
     width: 15px;
@@ -89,11 +112,13 @@ body{
     background: var(--heart-color);
     border-radius: 50%;
 }
-.heart::before{
+
+.heart::before {
     top: -7.5px;
     left: 0;
 }
-.heart::after{
+
+.heart::after {
     right: 0;
     top: -7.5px;
 }
@@ -104,9 +129,10 @@ body{
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 5;
+    z-index: 6;
     display: none;
 }
+
 .floating-heart {
     position: absolute;
     width: 12px;
@@ -115,6 +141,7 @@ body{
     transform: rotate(45deg);
     opacity: 0;
 }
+
 .floating-heart::before,
 .floating-heart::after {
     content: '';
@@ -124,37 +151,43 @@ body{
     background: var(--heart-color);
     border-radius: 50%;
 }
+
 .floating-heart::before {
     top: -6px;
     left: 0;
 }
+
 .floating-heart::after {
     left: -6px;
     top: 0;
 }
 
-/* Trigger floating hearts ONLY when the envelope has the .flap class (opened) */
+/* Trigger opening animations when .envelope-wrapper has .flap */
 .envelope-wrapper.flap .floating-hearts {
     display: block;
 }
+
 .envelope-wrapper.flap .floating-heart:nth-child(1) {
     top: 40%;
     left: 35%;
     animation: floatUp 2s ease-in-out infinite;
     animation-delay: 0.8s;
 }
+
 .envelope-wrapper.flap .floating-heart:nth-child(2) {
     top: 40%;
     left: 60%;
     animation: floatUp 2.2s ease-in-out infinite;
     animation-delay: 1.1s;
 }
+
 .envelope-wrapper.flap .floating-heart:nth-child(3) {
     top: 30%;
     left: 45%;
     animation: floatUp 1.8s ease-in-out infinite;
     animation-delay: 1.4s;
 }
+
 .envelope-wrapper.flap .floating-heart:nth-child(4) {
     top: 35%;
     left: 55%;
@@ -176,16 +209,19 @@ body{
     }
 }
 
-.flap > .envelope::before{
-    z-index: 0;
+.envelope-wrapper.flap .envelope::before {
     transform: rotateX(180deg);
+    z-index: 0;
 }
-.flap > .envelope .letter{
+
+.envelope-wrapper.flap .envelope .letter {
     bottom: 100px;
-    transform: scale(1.5);
+    transform: scale(1.4);
     transition-delay: 1s;
+    z-index: 3;
 }
-.flap > .heart{
-    transform: rotate(90deg);
+
+.envelope-wrapper.flap .heart {
+    transform: translate(-50%, -20%) rotate(90deg);
     transition-delay: 0.4s;
 }
